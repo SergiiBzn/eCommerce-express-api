@@ -1,3 +1,5 @@
+import Order from "../models/Order.js";
+
 export const getOrders = async (req, res) => {
   try {
     const orders = await Order.findAll();
