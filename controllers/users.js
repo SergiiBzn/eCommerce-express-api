@@ -13,9 +13,9 @@ export const createUser = async (req, res) => {
       body: { name, email, password },
     } = req;
     if (!name || !email || !password)
-      throw new Error("Name, email and password are required");
+      throw new Error('Name, email and password are required');
     const found = await User.findOne({ where: { email } });
-    if (found) throw new Error("Mail already exists");
+    if (found) throw new Error('Mail already exists');
     const user = await User.create(req.body);
     res.json(user);
   } catch (error) {
@@ -37,14 +37,14 @@ export const getUserById = async (req, res) => {
   }
 };
 
-export const updateuser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const {
       body: { name, email, password },
       params: { id },
     } = req;
     if (!id || !name || !email || !password)
-      throw new Error("Name, email and password are required");
+      throw new Error('Name, email and password are required');
     const user = await User.findByPk(id);
     if (!user) return res.status(404).json({ error: `User not found` });
     await user.update(req.body);
@@ -63,7 +63,7 @@ export const deleteUser = async (req, res) => {
     if (!user)
       return res.status(404).json({ error: `User with ID:${id} not found` });
     await user.destroy();
-    res.json({ message: "User deleted" });
+    res.json({ message: 'User deleted' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
