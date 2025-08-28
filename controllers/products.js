@@ -1,4 +1,5 @@
-import Product from "../models/Product.js";
+// import Product from '../models/Product.js';
+import { Product } from '../models/index.js';
 
 export const getProducts = async (req, res) => {
   try {
@@ -15,9 +16,9 @@ export const createProduct = async (req, res) => {
       body: { name, description, price },
     } = req;
     if (!name || !description || !price)
-      throw new Error("Name, description and price are required");
+      throw new Error('Name, description and price are required');
     const found = await Product.findOne({ where: { name } });
-    if (found) throw new Error("Product already exists");
+    if (found) throw new Error('Product already exists');
     const product = await Product.create(req.body);
     res.json(product);
   } catch (error) {
@@ -46,7 +47,7 @@ export const updateProduct = async (req, res) => {
       params: { id },
     } = req;
     if (!name || !description || !price)
-      throw new Error("Name, description and price are required");
+      throw new Error('Name, description and price are required');
     const product = await Product.findByPk(id);
     if (!product) return res.status(404).json({ error: `Product not found` });
     await product.update(req.body);
@@ -64,7 +65,7 @@ export const deleteProduct = async (req, res) => {
     const product = await Product.findByPk(id);
     if (!product) return res.status(404).json({ error: `Product not found` });
     await product.destroy();
-    res.json({ message: "Product deleted" });
+    res.json({ message: 'Product deleted' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

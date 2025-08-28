@@ -1,7 +1,7 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../db/index.js";
+import { DataTypes } from 'sequelize';
+import sequelize from '../db/index.js';
 
-const User = sequelize.define("User", {
+const User = sequelize.define('User', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -18,4 +18,5 @@ const User = sequelize.define("User", {
     allowNull: false,
   },
 });
+
 export default User;

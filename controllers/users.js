@@ -1,4 +1,5 @@
-import User from "../models/User.js";
+// import User from "../models/User.js";
+import { User } from '../models/index.js';
 
 export const getUsers = async (req, res) => {
   try {
@@ -40,20 +41,17 @@ export const getUserById = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  try {
-    const {
-      body: { name, email, password },
-      params: { id },
-    } = req;
-    if (!id || !name || !email || !password)
-      throw new Error('Name, email and password are required');
-    const user = await User.findByPk(id);
-    if (!user) return res.status(404).json({ error: `User not found` });
-    await user.update(req.body);
-    res.json(user);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+  const {
+    body: { name, email, password },
+    params: { id },
+  } = req;
+  if (!id || !name || !email || !password)
+    throw new Error('Name, email and password are required');
+  const user = await User.update(id);
+  if (!user) return res.status(404).json({ error: `User not found` });
+  await user.update(req.body);
+  res.json(user);
+  res.status(500).json({ error: error.message });
 };
 
 export const deleteUser = async (req, res) => {
