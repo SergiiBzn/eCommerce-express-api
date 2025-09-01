@@ -45,13 +45,17 @@ export const updateUser = async (req, res) => {
     body: { name, email, password },
     params: { id },
   } = req;
-  if (!id || !name || !email || !password)
-    throw new Error("Name, email and password are required");
-  const user = await User.findByPk(id);
-  if (!user) return res.status(404).json({ error: `User not found` });
-  await user.update(req.body);
-  res.json(user);
-  res.status(500).json({ error: error.message });
+  try {
+    if (!id || !name || !email || !password) {
+      throw new Error("Name, email and password are required");
+    }
+    const user = await User.findByPk(id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+    await user.update(req.body);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
 export const deleteUser = async (req, res) => {
